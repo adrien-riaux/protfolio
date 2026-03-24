@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.astro/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Runtime/log files
+*.log
+
+# Tooling
+.vercel/
+.vscode/*.code-workspace
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db

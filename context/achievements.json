@@ -1,0 +1,51 @@
+{
+  "github": {
+    "username": "your_github_username",
+    "publicRepos": 24,
+    "followers": 42,
+    "following": 18,
+    "totalStars": 126,
+    "topLanguages": ["TypeScript", "Python", "Go"],
+    "topRepos": [
+      {
+        "name": "portfolio",
+        "url": "https://github.com/your_github_username/portfolio",
+        "stars": 18,
+        "language": "TypeScript",
+        "description": "Portfolio website with static pages and an AI chat endpoint."
+      },
+      {
+        "name": "ml-notebooks",
+        "url": "https://github.com/your_github_username/ml-notebooks",
+        "stars": 14,
+        "language": "Python",
+        "description": "Applied machine learning experiments and utilities."
+      }
+    ]
+  },
+  "stackoverflow": {
+    "userId": 12345678,
+    "reputation": 2800,
+    "badgeCounts": {
+      "gold": 2,
+      "silver": 15,
+      "bronze": 29
+    },
+    "answerCount": 120,
+    "questionCount": 16,
+    "viewCount": 6800,
+    "profileUrl": "https://stackoverflow.com/users/12345678"
+  },
+  "kaggle": {
+    "username": "your_kaggle_username",
+    "rank": "Top 10%",
+    "medals": {
+      "gold": 0,
+      "silver": 3,
+      "bronze": 7
+    },
+    "competitions": 14,
+    "datasets": 6,
+    "notebooks": 11
+  }
+}

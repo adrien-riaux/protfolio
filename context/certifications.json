@@ -1,0 +1,18 @@
+[
+  {
+    "id": "aws-cloud-practitioner",
+    "title": "AWS Certified Cloud Practitioner",
+    "issuer": "Amazon Web Services",
+    "issuedAt": "2025-06",
+    "verifyUrl": "https://example.com/verify/aws-cloud-practitioner",
+    "badgeImage": "/certs/aws-cloud-practitioner.png"
+  },
+  {
+    "id": "tensorflow-developer",
+    "title": "TensorFlow Developer Certificate",
+    "issuer": "TensorFlow",
+    "issuedAt": "2025-09",
+    "verifyUrl": "https://example.com/verify/tensorflow-developer",
+    "badgeImage": "/certs/tensorflow-developer.png"
+  }
+]

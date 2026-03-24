@@ -1,0 +1,21 @@
+---
+interface Item {
+  label: string;
+  value: string | number;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {items.map((item) => (
+    <article class="card-surface p-5">
+      <p class="text-xs uppercase tracking-wider text-ink/60">{item.label}</p>
+      <p class="mt-2 text-3xl font-bold text-moss">{item.value}</p>
+    </article>
+  ))}
+</section>

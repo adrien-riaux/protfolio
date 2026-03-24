@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PlatformCard from '../components/PlatformCard.astro';
+import CertBadge from '../components/CertBadge.astro';
+import { fetchGitHubStats } from '../lib/github';
+import { fetchStackOverflowStats } from '../lib/stackoverflow';
+import { getKaggleStats } from '../lib/kaggle';
+import { readCertifications } from '../lib/data';
+
+const [github, stackoverflow, kaggle, certifications] = await Promise.all([
+  fetchGitHubStats(),
+  fetchStackOverflowStats(),
+  getKaggleStats(),
+  readCertifications()
+]);
+---
+
+<Layout title="Portfolio | Achievements" description="GitHub, StackOverflow, Kaggle, and certifications.">
+  <section>
+    <span class="brand-pill">Achievements</span>
+    <h1 class="mt-4 text-3xl font-bold text-ink">Platform Highlights</h1>
+    <p class="mt-2 max-w-2xl text-ink/75">
+      This page mixes build-time API data with local fallback records for consistency and speed.
+    </p>
+  </section>
+
+  <section class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+    <PlatformCard
+      title="GitHub"
+      summary={`@${github.username} · ${github.topLanguages.join(', ')}`}
+      link={`https://github.com/${github.username}`}
+      metrics={[
+        { label: 'Public Repos', value: github.publicRepos },
+        { label: 'Followers', value: github.followers },
+        { label: 'Total Stars', value: github.totalStars },
+        { label: 'Top Repos', value: github.topRepos.length }
+      ]}
+    />
+
+    <PlatformCard
+      title="StackOverflow"
+      summary="Public Q&A contribution metrics"
+      link={stackoverflow.profileUrl}
+      metrics={[
+        { label: 'Reputation', value: stackoverflow.reputation },
+        { label: 'Answers', value: stackoverflow.answerCount },
+        { label: 'Questions', value: stackoverflow.questionCount },
+        {
+          label: 'Badges',
+          value: `${stackoverflow.badgeCounts.gold}/${stackoverflow.badgeCounts.silver}/${stackoverflow.badgeCounts.bronze}`
+        }
+      ]}
+    />
+
+    <PlatformCard
+      title="Kaggle"
+      summary={`@${kaggle.username} · rank ${kaggle.rank}`}
+      link={`https://www.kaggle.com/${kaggle.username}`}
+      metrics={[
+        { label: 'Competitions', value: kaggle.competitions },
+        { label: 'Datasets', value: kaggle.datasets },
+        { label: 'Notebooks', value: kaggle.notebooks },
+        {
+          label: 'Medals (G/S/B)',
+          value: `${kaggle.medals.gold}/${kaggle.medals.silver}/${kaggle.medals.bronze}`
+        }
+      ]}
+    />
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold text-ink">Certifications</h2>
+    <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {certifications.map((cert) => (
+        <CertBadge cert={cert} />
+      ))}
+    </div>
+  </section>
+</Layout>

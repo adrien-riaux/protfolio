@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Portfolio website with achievements and an AI chat assistant.' } = Astro.props;
+const owner = import.meta.env.PUBLIC_OWNER_NAME ?? 'Adrien Riaux';
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="sticky top-0 z-10 border-b border-ink/10 bg-sand/90 backdrop-blur-md">
+      <nav class="mx-auto flex w-[min(1100px,92vw)] items-center justify-between py-4">
+        <a href="/" class="font-display text-lg font-bold tracking-tight text-ink">{owner}</a>
+        <ul class="flex items-center gap-4 text-sm font-semibold text-ink/80">
+          <li><a class="hover:text-moss" href="/">Home</a></li>
+          <li><a class="hover:text-moss" href="/about">About</a></li>
+          <li><a class="hover:text-moss" href="/achievements">Achievements</a></li>
+          <li><a class="hover:text-moss" href="/chat">Chat</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="pb-16 pt-8">
+      <slot />
+    </main>
+
+    <footer class="border-t border-ink/10 py-8 text-center text-sm text-ink/55">
+      <span>&copy; {currentYear} Adrien Riaux. Built with focus, data, and clean engineering.</span>
+    </footer>
+  </body>
+</html>
