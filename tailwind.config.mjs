@@ -6,7 +6,7 @@ export default {
       colors: {
         ink: '#E6F4EB',
         moss: '#2CE680',
-        sand: '#0B100D',
+        sand: '#213428',
         coral: '#1CA85F',
         gold: '#86F7B9'
       },
