@@ -1,5 +1,5 @@
-import type { ChatMessage } from './types';
-import { readAchievements, readCertifications, readProfileMarkdown } from './data';
+import type { ChatMessage } from './types.js';
+import { readAchievements, readCertifications, readProfileMarkdown } from './data.js';
 
 const MAX_HISTORY = 10;
 const MAX_MESSAGE_LENGTH = 2000;
