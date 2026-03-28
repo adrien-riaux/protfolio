@@ -1,21 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const highlights = [
-  {
-    title: 'Production ML Engineering',
-    body: 'Designing scalable systems from experimentation to reliable deployment in cloud-native stacks.'
-  },
-  {
-    title: 'GenAI & RAG',
-    body: 'Shipping practical LLM applications focused on business relevance, performance, and maintainability.'
-  },
-  {
-    title: 'MLOps Mindset',
-    body: 'Building reusable templates, CI/CD-first workflows, and reproducible pipelines for delivery speed.'
-  }
-];
-
 const experiences = [
   {
     period: 'Current',
@@ -110,18 +95,6 @@ const experiences = [
     </div>
   </section>
 
-  <section id="highlights" class="mt-10">
-    <h2 class="text-2xl font-bold text-ink sm:text-3xl">What I Focus On</h2>
-    <div class="mt-6 grid gap-5 md:grid-cols-3">
-      {highlights.map((item) => (
-        <article class="card-surface p-6">
-          <h3 class="text-xl font-bold text-ink">{item.title}</h3>
-          <p class="mt-3 leading-7 text-ink/80">{item.body}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
   <section id="experience" class="mt-10 card-surface px-6 py-10 sm:px-10">
     <h2 class="text-2xl font-bold text-ink sm:text-3xl">Experience</h2>
     <ol class="relative mt-8 before:absolute before:bottom-3 before:left-[6px] before:top-3 before:w-px before:bg-moss/45">
@@ -147,7 +120,7 @@ const experiences = [
     <div class="mt-6 flex flex-wrap gap-3">
       <a
         href="mailto:adrien.riaux@efrei.net"
-        class="rounded-full border border-moss/35 bg-moss/20 px-5 py-2.5 text-sm font-semibold text-moss transition hover:bg-moss/28"
+        class="rounded-full border border-moss/45 bg-moss/10 px-5 py-2.5 text-sm font-semibold text-moss transition hover:bg-moss/15"
       >
         Send an email
       </a>

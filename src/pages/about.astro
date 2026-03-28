@@ -1,22 +1,59 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { readProfileMarkdown } from '../lib/data';
-
-const profile = await readProfileMarkdown();
-const sections = profile
-  .split(/\n\n+/)
-  .map((part) => part.trim())
-  .filter(Boolean);
 ---
 
-<Layout title="Portfolio | About" description="About page generated from portfolio profile context.">
-  <section class="card-surface p-8">
+<Layout title="Portfolio | About" description="How this portfolio is built: stack, architecture, and chatbot limits.">
+  <section>
     <span class="brand-pill">About</span>
-    <h1 class="mt-4 text-3xl font-bold text-ink">Professional Profile</h1>
-    <div class="mt-6 space-y-4 leading-7 text-ink/85">
-      {sections.map((section) => (
-        <p>{section}</p>
-      ))}
+    <h1 class="mt-4 text-3xl font-bold text-ink sm:text-4xl">About This Portfolio</h1>
+  </section>
+
+  <section class="mt-8 grid gap-5 lg:grid-cols-2">
+    <article class="card-surface p-7">
+      <h2 class="text-2xl font-bold text-ink">Core Technologies</h2>
+      <ul class="mt-4 space-y-3 text-ink/80">
+        <li><span class="font-semibold text-ink">Astro + TypeScript:</span> fast, static-first rendering with type safety.</li>
+        <li><span class="font-semibold text-ink">Tailwind CSS:</span> utility-driven styling for consistent design tokens.</li>
+        <li><span class="font-semibold text-ink">Hono API route:</span> lightweight backend endpoint for chat requests.</li>
+        <li><span class="font-semibold text-ink">LLM inference:</span> TogetherAI with gpt-oss-120b.</li>
+      </ul>
+    </article>
+
+    <article class="card-surface p-7">
+      <h2 class="text-2xl font-bold text-ink">Data And Rendering Model</h2>
+      <ul class="mt-4 space-y-3 text-ink/80">
+        <li><span class="font-semibold text-ink">Context-driven data:</span> profile, achievements, and certifications are loaded from local context files.</li>
+        <li><span class="font-semibold text-ink">Static-first pages:</span> most content is pre-rendered for speed and SEO.</li>
+        <li><span class="font-semibold text-ink">Interactive island:</span> chat UI hydrates only where interactivity is needed.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="mt-10 card-surface p-7 sm:p-8">
+    <h2 class="text-2xl font-bold text-ink">Chatbot Limits And Safety</h2>
+    <div class="mt-4 space-y-4 leading-7 text-ink/80">
+      <p>
+        The assistant is useful for exploration and first drafts, but it can still generate incorrect,
+        outdated, or incomplete answers. Important decisions should always be verified with reliable
+        documentation and human review.
+      </p>
+      <p>
+        Responses depend on model behavior and prompt context. This means output quality can vary,
+        and some nuanced personal or project-specific details may be missed.
+      </p>
+      <p>
+        <span class="text-moss">Rate limiting (5 questions per session)</span> and lightweight protections are applied to keep the service available and reduce
+        abuse, but availability may still be impacted by provider-side constraints.
+      </p>
     </div>
+  </section>
+
+  <section class="mt-10 card-surface p-7 sm:p-8">
+    <h2 class="text-2xl font-bold text-ink">Deployment And Operations</h2>
+    <p class="mt-4 leading-7 text-ink/80">
+      The project deploys on Vercel with GitHub Actions workflows: one for tests and one for
+      production deployment after main-branch tests succeed. This keeps delivery predictable while
+      preserving fast iteration.
+    </p>
   </section>
 </Layout>

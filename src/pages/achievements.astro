@@ -1,79 +1,278 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PlatformCard from '../components/PlatformCard.astro';
 import CertBadge from '../components/CertBadge.astro';
-import { fetchGitHubStats } from '../lib/github';
-import { fetchStackOverflowStats } from '../lib/stackoverflow';
-import { getKaggleStats } from '../lib/kaggle';
-import { readCertifications } from '../lib/data';
+import { readAchievements, readCertifications } from '../lib/data';
 
-const [github, stackoverflow, kaggle, certifications] = await Promise.all([
-  fetchGitHubStats(),
-  fetchStackOverflowStats(),
-  getKaggleStats(),
+const [{ github, stackoverflow, kaggle }, certifications] = await Promise.all([
+  readAchievements(),
   readCertifications()
 ]);
+
+const githubPinnedProjects = github.topRepos;
+
+const publications = [
+  {
+    title: 'Mastering HistGBM - Sklearn Implementation',
+    url: 'https://medium.com/@adrien.riaux/mastering-histgbm-sklearn-implementation-d3a19fbe729d'
+  },
+  {
+    title: 'Understanding PEFT - Using Adapter Techniques',
+    url: 'https://medium.com/@adrien.riaux/understanding-peft-using-adapter-techniques-16b8e9152759'
+  },
+  {
+    title: 'Mastering Git - Documentation and Usage',
+    url: 'https://medium.com/@adrien.riaux/mastering-git-documentation-and-usage-8057063608c7'
+  }
+];
 ---
 
 <Layout title="Portfolio | Achievements" description="GitHub, StackOverflow, Kaggle, and certifications.">
   <section>
     <span class="brand-pill">Achievements</span>
-    <h1 class="mt-4 text-3xl font-bold text-ink">Platform Highlights</h1>
-    <p class="mt-2 max-w-2xl text-ink/75">
-      This page mixes build-time API data with local fallback records for consistency and speed.
-    </p>
+    <h1 class="mt-4 text-3xl font-bold text-ink">Personal Highlights</h1>
   </section>
 
-  <section class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-    <PlatformCard
-      title="GitHub"
-      summary={`@${github.username} · ${github.topLanguages.join(', ')}`}
-      link={`https://github.com/${github.username}`}
-      metrics={[
-        { label: 'Public Repos', value: github.publicRepos },
-        { label: 'Followers', value: github.followers },
-        { label: 'Total Stars', value: github.totalStars },
-        { label: 'Top Repos', value: github.topRepos.length }
-      ]}
-    />
+  <section class="mt-8 space-y-6">
+    <article class="card-surface relative overflow-hidden p-7 sm:p-8">
+      <div class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-moss/9 blur-3xl"></div>
+      <div class="relative flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-ink">GitHub</h2>
+          <a
+            href={`https://github.com/${github.username}`}
+            target="_blank"
+            rel="noreferrer"
+            class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-moss transition hover:text-gold"
+          >
+            <span>Open profile</span>
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3m0 0h-7m7 0v7" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+            </svg>
+          </a>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-moss/35 bg-moss/12 p-2">
+          <img src="/logos/github.png" alt="GitHub logo" class="h-full w-full object-contain" loading="lazy" />
+        </div>
+      </div>
 
-    <PlatformCard
-      title="StackOverflow"
-      summary="Public Q&A contribution metrics"
-      link={stackoverflow.profileUrl}
-      metrics={[
-        { label: 'Reputation', value: stackoverflow.reputation },
-        { label: 'Answers', value: stackoverflow.answerCount },
-        { label: 'Questions', value: stackoverflow.questionCount },
-        {
-          label: 'Badges',
-          value: `${stackoverflow.badgeCounts.gold}/${stackoverflow.badgeCounts.silver}/${stackoverflow.badgeCounts.bronze}`
-        }
-      ]}
-    />
+      <div class="relative mt-6 grid gap-3 md:grid-cols-3">
+        {githubPinnedProjects.map((project) => (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-ink/12 bg-sand/55 p-4 transition hover:-translate-y-0.5 hover:border-moss/45 hover:shadow-[0_10px_24px_rgba(44,230,128,0.1)]"
+          >
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-base font-bold text-ink transition group-hover:text-moss">{project.name}</h3>
+              <span class="shrink-0 rounded-full border border-moss/30 bg-moss/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-moss/90">
+                {project.language}
+              </span>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-ink/75">{project.description}</p>
+          </a>
+        ))}
+      </div>
+    </article>
 
-    <PlatformCard
-      title="Kaggle"
-      summary={`@${kaggle.username} · rank ${kaggle.rank}`}
-      link={`https://www.kaggle.com/${kaggle.username}`}
-      metrics={[
-        { label: 'Competitions', value: kaggle.competitions },
-        { label: 'Datasets', value: kaggle.datasets },
-        { label: 'Notebooks', value: kaggle.notebooks },
-        {
-          label: 'Medals (G/S/B)',
-          value: `${kaggle.medals.gold}/${kaggle.medals.silver}/${kaggle.medals.bronze}`
-        }
-      ]}
-    />
+    <article class="card-surface relative overflow-hidden p-7 sm:p-8">
+      <div class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-moss/8 blur-3xl"></div>
+      <div class="relative flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-ink">Kaggle</h2>
+          <a
+            href={`https://www.kaggle.com/${kaggle.username}`}
+            target="_blank"
+            rel="noreferrer"
+            class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-moss transition hover:text-gold"
+          >
+            <span>Open profile</span>
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3m0 0h-7m7 0v7" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+            </svg>
+          </a>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-moss/35 bg-moss/12 p-2">
+          <img src="/logos/kaggle.png" alt="Kaggle logo" class="h-full w-full object-contain" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="relative mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Rank</p>
+          <p class="mt-1 text-lg font-bold text-ink">{kaggle.rank}</p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Published Notebooks</p>
+          <p class="mt-1 text-lg font-bold text-ink">{kaggle.notebooks}</p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Medals (G/S/B)</p>
+          <p class="mt-1 text-lg font-bold text-ink">
+            {`${kaggle.medals.gold}/${kaggle.medals.silver}/${kaggle.medals.bronze}`}
+          </p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Upvotes</p>
+          <p class="mt-1 text-lg font-bold text-ink">{`${kaggle.upvotes}+`}</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card-surface relative overflow-hidden p-7 sm:p-8">
+      <div class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-moss/7 blur-3xl"></div>
+      <div class="relative flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-ink">StackOverflow</h2>
+          <a
+            href={stackoverflow.profileUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-moss transition hover:text-gold"
+          >
+            <span>Open profile</span>
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3m0 0h-7m7 0v7" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+            </svg>
+          </a>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-moss/35 bg-moss/12 p-2">
+          <img src="/logos/stackoverflow.png" alt="StackOverflow logo" class="h-full w-full object-contain" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="relative mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Reputation</p>
+          <p class="mt-1 text-lg font-bold text-ink">{stackoverflow.reputation}</p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Answers</p>
+          <p class="mt-1 text-lg font-bold text-ink">{stackoverflow.answerCount}</p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Questions</p>
+          <p class="mt-1 text-lg font-bold text-ink">{stackoverflow.questionCount}</p>
+        </div>
+        <div class="rounded-xl border border-ink/10 bg-sand/55 p-3">
+          <p class="text-xs uppercase tracking-wider text-ink/55">Badges (G/S/B)</p>
+          <p class="mt-1 text-lg font-bold text-ink">
+            {`${stackoverflow.badgeCounts.gold}/${stackoverflow.badgeCounts.silver}/${stackoverflow.badgeCounts.bronze}`}
+          </p>
+        </div>
+      </div>
+    </article>
   </section>
 
   <section class="mt-12">
-    <h2 class="text-2xl font-bold text-ink">Certifications</h2>
-    <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="flex items-center justify-between gap-3">
+      <h2 class="text-2xl font-bold text-ink">Certifications</h2>
+      <div class="flex items-center gap-2">
+        <button
+          id="certs-prev"
+          type="button"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-moss/45 bg-moss/10 text-moss transition hover:bg-moss/20 disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Show previous certification"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button
+          id="certs-next"
+          type="button"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-moss/45 bg-moss/10 text-moss transition hover:bg-moss/20 disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Show next certification"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="certs-carousel" class="certs-carousel mt-5 flex gap-4 overflow-x-auto pb-2 pr-1 scroll-smooth">
       {certifications.map((cert) => (
-        <CertBadge cert={cert} />
+        <div class="w-full shrink-0 sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]">
+          <CertBadge cert={cert} />
+        </div>
       ))}
     </div>
   </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold text-ink">Publications</h2>
+    <p class="mt-2 max-w-2xl text-ink/75">
+      A selection of my latest Medium articles on applied machine learning and engineering practice.
+    </p>
+    <div class="mt-5 grid gap-5 md:grid-cols-3">
+      {publications.map((post) => (
+        <a
+          href={post.url}
+          target="_blank"
+          rel="noreferrer"
+          class="group card-surface relative overflow-hidden rounded-2xl border border-ink/15 p-6 transition hover:-translate-y-0.5 hover:border-moss/40 hover:shadow-[0_14px_32px_rgba(44,230,128,0.1)]"
+        >
+          <div class="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-moss/10 blur-2xl"></div>
+          <h3 class="relative text-lg font-bold leading-6 text-ink transition group-hover:text-moss">{post.title}</h3>
+          <p class="relative mt-4 inline-flex items-center gap-2 text-sm font-semibold text-moss">
+            <span>Read on Medium</span>
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3m0 0h-7m7 0v7" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+            </svg>
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const viewport = document.getElementById('certs-carousel');
+      const prevBtn = document.getElementById('certs-prev');
+      const nextBtn = document.getElementById('certs-next');
+      if (!viewport || !prevBtn || !nextBtn) return;
+
+      const getStep = () => {
+        const firstCard = viewport.firstElementChild;
+        if (!(firstCard instanceof HTMLElement)) return viewport.clientWidth;
+        const cardWidth = firstCard.getBoundingClientRect().width;
+        const gap = 16;
+        return cardWidth + gap;
+      };
+
+      const updateButtons = () => {
+        const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+        prevBtn.toggleAttribute('disabled', viewport.scrollLeft <= 2);
+        nextBtn.toggleAttribute('disabled', viewport.scrollLeft >= maxScrollLeft - 2);
+      };
+
+      prevBtn.addEventListener('click', () => {
+        viewport.scrollBy({ left: -getStep(), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        viewport.scrollBy({ left: getStep(), behavior: 'smooth' });
+      });
+
+      viewport.addEventListener('scroll', updateButtons, { passive: true });
+      window.addEventListener('resize', updateButtons);
+      updateButtons();
+    })();
+  </script>
+
+  <style>
+    .certs-carousel {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .certs-carousel::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 </Layout>
