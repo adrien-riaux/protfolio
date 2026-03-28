@@ -2,12 +2,29 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { ChatMessage } from '../lib/types';
 
+const CHAT_SESSION_STORAGE_KEY = 'portfolio-chat-session-id';
+
 const SUGGESTED_QUESTIONS = [
   'What are your strongest technical skills?',
   'Which projects are you most proud of?',
   'What kind of roles are you targeting?',
   'What certifications do you currently hold?'
 ];
+
+function getOrCreateSessionId(): string {
+  if (typeof window === 'undefined') return 'server-session';
+
+  const existing = window.sessionStorage.getItem(CHAT_SESSION_STORAGE_KEY);
+  if (existing) return existing;
+
+  const generated =
+    typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  window.sessionStorage.setItem(CHAT_SESSION_STORAGE_KEY, generated);
+  return generated;
+}
 
 export default function ChatWidget(): JSX.Element {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -16,6 +33,7 @@ export default function ChatWidget(): JSX.Element {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (messages.length === 0) return;
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
@@ -31,7 +49,10 @@ export default function ChatWidget(): JSX.Element {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Chat-Session-Id': getOrCreateSessionId()
+        },
         body: JSON.stringify({ messages: nextHistory })
       });
 
@@ -129,7 +150,9 @@ export default function ChatWidget(): JSX.Element {
         </button>
       </form>
 
-      <p className="mt-3 text-xs text-ink/60">Powered by TogetherAI. Chat is stateless and not stored.</p>
+      <p className="mt-3 text-xs text-ink/60">
+        Chat is stateless. Inference via TogetherAI. Rate limit: 5 questions per session.
+      </p>
     </section>
   );
 }
