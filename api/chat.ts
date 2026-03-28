@@ -1,11 +1,9 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 import Together from 'together-ai';
-import { buildSystemPrompt, checkRateLimit, sanitizeMessages } from '../src/lib/chat';
-import type { ChatRequest } from '../src/lib/types';
-import { getEnv } from '../src/lib/runtime';
-
-export const runtime = 'nodejs';
+import { buildSystemPrompt, checkRateLimit, sanitizeMessages } from '../src/lib/chat.js';
+import type { ChatRequest } from '../src/lib/types.js';
+import { getEnv } from '../src/lib/runtime.js';
 
 const model = getEnv('CHAT_MODEL') ?? 'openai/gpt-oss-120b';
 const app = new Hono();

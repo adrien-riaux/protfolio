@@ -56,7 +56,7 @@ Required:
 - make preview
 
 ## Deployment Target
-- Vercel using nodejs20.x runtime for api/**/*.ts from vercel.json.
+- Vercel with Node.js version pinned via package.json engines (node: 20.x).
 - GitHub Actions uses two workflows:
    - .github/workflows/test.yml runs check and test on push to dev and main.
    - .github/workflows/deploy.yml deploys to Vercel only after CI Tests succeeds on main.
