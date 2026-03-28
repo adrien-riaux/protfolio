@@ -15,9 +15,9 @@ Build and maintain a portfolio website that is fast, clean, and easy to personal
 - Language: TypeScript for all logic and components
 
 ## Product Rules
-- Keep pages static-first. Fetch platform data at build time.
+- Keep pages static-first. Load platform data from local context JSON.
 - Keep chat stateless. Do not store conversation history server-side.
-- Use local fallback data from context files if external APIs fail.
+- Use context files as the source of truth for profile and achievements.
 - Keep code modular with clear separation:
    - UI components in src/components
    - page routes in src/pages
@@ -26,25 +26,18 @@ Build and maintain a portfolio website that is fast, clean, and easy to personal
 
 ## Source of Truth for Content
 - context/PROFILE.md: personal story, experience, positioning
-- context/achievements.json: fallback achievements and platform stats
+- context/achievements.json: achievements and platform stats
 - context/certifications.json: certifications metadata
 - public/certs: local badge images
 
 ## Environment Variables
-Use env.example as template for .env.local.
+Use .env.example as template for .env.local.
 
 Required:
 - TOGETHER_API_KEY
-- GITHUB_USERNAME
-- STACKOVERFLOW_USER_ID
-- KAGGLE_USERNAME
 - PUBLIC_OWNER_NAME
 - PUBLIC_OWNER_TAGLINE
 - PUBLIC_SITE_URL
-
-Optional:
-- GITHUB_TOKEN
-- STACKOVERFLOW_KEY
 
 ## Quality Rules
 - Keep naming clean and explicit.
@@ -63,7 +56,16 @@ Optional:
 - make preview
 
 ## Deployment Target
-- Vercel using bun@1 runtime for api/**/*.ts from vercel.json.
+- Vercel using nodejs20.x runtime for api/**/*.ts from vercel.json.
+- GitHub Actions uses two workflows:
+   - .github/workflows/test.yml runs check and test on push to dev and main.
+   - .github/workflows/deploy.yml deploys to Vercel only after CI Tests succeeds on main.
+
+## CI/CD Secrets
+Required GitHub repository secrets for deployment workflow:
+- VERCEL_TOKEN
+- VERCEL_ORG_ID
+- VERCEL_PROJECT_ID
 
 ## Change Workflow
 When making changes:
