@@ -7,15 +7,27 @@ import { getEnv } from '../src/lib/runtime';
 
 export const runtime = 'nodejs';
 
-const model = 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free';
+const model = getEnv('CHAT_MODEL') ?? 'openai/gpt-oss-120b';
 const app = new Hono();
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
+function sanitizeSessionId(value: string | undefined): string | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!/^[a-zA-Z0-9._:-]{8,128}$/.test(trimmed)) {
+    return null;
+  }
+
+  return trimmed;
+}
+
 app.post('/api/chat', async (context) => {
   const ip = context.req.header('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  const sessionId = sanitizeSessionId(context.req.header('x-chat-session-id'));
+  const rateLimitKey = sessionId ? `session:${sessionId}` : `ip:${ip}`;
 
-  if (!checkRateLimit(ip, rateLimitStore, 20)) {
-    return context.json({ error: 'Rate limit exceeded. Please retry later.' }, 429);
+  if (!checkRateLimit(rateLimitKey, rateLimitStore, 5, 43_200_000)) {
+    return context.json({ error: 'Rate limit exceeded: 5 questions per session.' }, 429);
   }
 
   const apiKey = getEnv('TOGETHER_API_KEY');
