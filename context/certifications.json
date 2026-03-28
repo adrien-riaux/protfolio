@@ -1,18 +1,58 @@
 [
   {
-    "id": "aws-cloud-practitioner",
-    "title": "AWS Certified Cloud Practitioner",
-    "issuer": "Amazon Web Services",
-    "issuedAt": "2025-06",
-    "verifyUrl": "https://example.com/verify/aws-cloud-practitioner",
-    "badgeImage": "/certs/aws-cloud-practitioner.png"
+    "id": "gcp-professional-mle",
+    "title": "GCP Professional ML Engineer",
+    "issuer": "Google Cloud",
+    "verifyUrl": "/certs/gcp-professional-mle.pdf",
+    "badgeImage": "/certs/gcp-professional-mle-thumb.png"
   },
   {
     "id": "tensorflow-developer",
-    "title": "TensorFlow Developer Certificate",
+    "title": "TensorFlow Developer",
     "issuer": "TensorFlow",
-    "issuedAt": "2025-09",
-    "verifyUrl": "https://example.com/verify/tensorflow-developer",
-    "badgeImage": "/certs/tensorflow-developer.png"
+    "verifyUrl": "/certs/tensorflow-developer.pdf",
+    "badgeImage": "/certs/tensorflow-developer-thumb.png"
+  },
+  {
+    "id": "dataiku-generative-ai-practitioner",
+    "title": "Generative AI Practitioner",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-generative-ai-practitioner.pdf",
+    "badgeImage": "/certs/dataiku-generative-ai-practitioner-thumb.png"
+  },
+  {
+    "id": "dataiku-core-designer",
+    "title": "Core Designer",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-core-designer.pdf",
+    "badgeImage": "/certs/dataiku-core-designer-thumb.png"
+  },
+  {
+    "id": "dataiku-advanced-designer",
+    "title": "Advanced Designer",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-advanced-designer.pdf",
+    "badgeImage": "/certs/dataiku-advanced-designer-thumb.png"
+  },
+  {
+    "id": "dataiku-developer",
+    "title": "Developer",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-developer.pdf",
+    "badgeImage": "/certs/dataiku-developer-thumb.png"
+  },
+  {
+    "id": "dataiku-ml-practitioner",
+    "title": "ML Practitioner",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-ml-practitioner.pdf",
+    "badgeImage": "/certs/dataiku-ml-practitioner-thumb.png"
+  },
+  {
+    "id": "dataiku-mlops-practitioner",
+    "title": "MLOps Practitioner",
+    "issuer": "Dataiku",
+    "verifyUrl": "/certs/dataiku-mlops-practitioner.pdf",
+    "badgeImage": "/certs/dataiku-mlops-practitioner-thumb.png"
   }
 ]
