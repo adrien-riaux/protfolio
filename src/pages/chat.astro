@@ -5,11 +5,14 @@ import ChatWidget from '../components/ChatWidget.tsx';
 
 <Layout title="Portfolio | Chat" description="Ask the portfolio AI assistant about projects, skills, and achievements.">
   <section class="mb-6">
-    <span class="brand-pill">AI Assistant</span>
-    <h1 class="mt-4 text-3xl font-bold text-ink">Ask me anything about my work</h1>
-    <p class="mt-2 max-w-2xl text-ink/75">
-      This assistant is grounded in this portfolio context and answers in a concise, first-person voice.
-    </p>
+    <span class="brand-pill">Chat</span>
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <h1 class="text-3xl font-bold text-ink">Ask Anything About My Work</h1>
+      <p class="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-sand/70 px-3 py-1 text-sm text-ink/75 sm:shrink-0">
+        <img src="/logos/openai.png" alt="OpenAI logo" class="h-4 w-4 object-contain" loading="lazy" />
+        gpt-oss-120b (OpenAI)
+      </p>
+    </div>
   </section>
 
   <ChatWidget client:load />

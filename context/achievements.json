@@ -1,51 +1,48 @@
 {
   "github": {
-    "username": "your_github_username",
-    "publicRepos": 24,
-    "followers": 42,
-    "following": 18,
-    "totalStars": 126,
-    "topLanguages": ["TypeScript", "Python", "Go"],
+    "username": "adrien-riaux",
     "topRepos": [
       {
-        "name": "portfolio",
-        "url": "https://github.com/your_github_username/portfolio",
-        "stars": 18,
-        "language": "TypeScript",
-        "description": "Portfolio website with static pages and an AI chat endpoint."
+        "name": "distill-modern-bert",
+        "url": "https://github.com/adrien-riaux/distill-modern-bert",
+        "language": "Python",
+        "description": "Distills ModernBERT into a compact Model2Vec embedding model, preserving strong retrieval quality with lower compute and latency."
       },
       {
-        "name": "ml-notebooks",
-        "url": "https://github.com/your_github_username/ml-notebooks",
-        "stars": 14,
-        "language": "Python",
-        "description": "Applied machine learning experiments and utilities."
+        "name": "comche",
+        "url": "https://github.com/adrien-riaux/comche",
+        "language": "Go",
+        "description": "Fast Go pre-commit checker that scans Python comments for tags like TODO and BUG to enforce commit hygiene."
+      },
+      {
+        "name": "vidscribe",
+        "url": "https://github.com/adrien-riaux/vidscribe",
+        "language": "Go",
+        "description": "Monitors YouTube channels, summarizes new videos with Gemini, and sends notifications as a scheduled cloud job."
       }
     ]
   },
   "stackoverflow": {
-    "userId": 12345678,
-    "reputation": 2800,
+    "userId": 20212187,
+    "reputation": 553,
     "badgeCounts": {
-      "gold": 2,
-      "silver": 15,
-      "bronze": 29
+      "gold": 0,
+      "silver": 4,
+      "bronze": 16
     },
-    "answerCount": 120,
-    "questionCount": 16,
-    "viewCount": 6800,
-    "profileUrl": "https://stackoverflow.com/users/12345678"
+    "answerCount": 39,
+    "questionCount": 4,
+    "profileUrl": "https://stackoverflow.com/users/20212187/adrien-riaux"
   },
   "kaggle": {
-    "username": "your_kaggle_username",
-    "rank": "Top 10%",
+    "username": "adrienriaux",
+    "rank": "Notebooks Expert",
     "medals": {
       "gold": 0,
-      "silver": 3,
-      "bronze": 7
+      "silver": 0,
+      "bronze": 6
     },
-    "competitions": 14,
-    "datasets": 6,
-    "notebooks": 11
+    "notebooks": 16,
+    "upvotes": 220
   }
 }
