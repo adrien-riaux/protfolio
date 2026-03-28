@@ -58,9 +58,8 @@ export interface KaggleStats {
     silver: number;
     bronze: number;
   };
-  competitions: number;
-  datasets: number;
   notebooks: number;
+  upvotes: number;
 }
 
 export interface Achievements {

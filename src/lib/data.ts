@@ -5,8 +5,12 @@ const achievementsPath = new URL('../../context/achievements.json', import.meta.
 const certificationsPath = new URL('../../context/certifications.json', import.meta.url);
 const profilePath = new URL('../../context/PROFILE.md', import.meta.url);
 
-export async function readFallbackAchievements(): Promise<Achievements> {
+export async function readAchievements(): Promise<Achievements> {
   return readJsonFile<Achievements>(achievementsPath);
+}
+
+export async function readFallbackAchievements(): Promise<Achievements> {
+  return readAchievements();
 }
 
 export async function readCertifications(): Promise<Certification[]> {

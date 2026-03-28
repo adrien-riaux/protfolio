@@ -1,5 +1,5 @@
 import type { ChatMessage } from './types';
-import { readFallbackAchievements, readCertifications, readProfileMarkdown } from './data';
+import { readAchievements, readCertifications, readProfileMarkdown } from './data';
 
 const MAX_HISTORY = 10;
 const MAX_MESSAGE_LENGTH = 2000;
@@ -29,7 +29,7 @@ export function sanitizeMessages(input: unknown): ChatMessage[] {
 export async function buildSystemPrompt(): Promise<string> {
   const [profile, achievements, certifications] = await Promise.all([
     readProfileMarkdown(),
-    readFallbackAchievements(),
+    readAchievements(),
     readCertifications()
   ]);
 
@@ -55,15 +55,16 @@ export interface RateLimitEntry {
 }
 
 export function checkRateLimit(
-  ip: string,
+  key: string,
   store: Map<string, RateLimitEntry>,
-  maxPerHour = 20
+  maxRequests = 20,
+  windowMs = 3_600_000
 ): boolean {
   const now = Date.now();
-  const current = store.get(ip);
+  const current = store.get(key);
 
   if (current && now < current.resetAt) {
-    if (current.count >= maxPerHour) {
+    if (current.count >= maxRequests) {
       return false;
     }
 
@@ -71,9 +72,9 @@ export function checkRateLimit(
     return true;
   }
 
-  store.set(ip, {
+  store.set(key, {
     count: 1,
-    resetAt: now + 3_600_000
+    resetAt: now + windowMs
   });
 
   return true;
