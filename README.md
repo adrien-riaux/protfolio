@@ -9,7 +9,7 @@ The site is static-first for speed and reliability: profile pages are pre-render
 - TypeScript across pages, components, integrations, and API route
 - Astro static architecture with a single interactive React chat island
 - Static JSON-backed achievements data for GitHub, StackOverflow, and Kaggle
-- Hono + TogetherAI chat endpoint with input sanitization and rate limiting
+- Vercel Function + TogetherAI chat endpoint with input sanitization and rate limiting
 - Clean project structure and Makefile shortcuts for day-to-day development
 
 ## Tech Stack
@@ -18,9 +18,9 @@ The site is static-first for speed and reliability: profile pages are pre-render
 - Web framework: Astro 4
 - UI styling: Tailwind CSS
 - Client interactivity: React (Astro island)
-- API router: Hono
+- API endpoint: Vercel Function
 - LLM provider: TogetherAI
-- Model: openai/gpt-oss-120b
+- Model strategy: openai/gpt-oss-120b (primary), servicenow-ai/apriel-1.6-15b-thinker (fallback)
 - Hosting target: Vercel with Node.js runtime for API routes
 
 ## Quick Start
@@ -61,7 +61,7 @@ PUBLIC_SITE_URL=https://yoursite.vercel.app
 
 - Public pages are generated statically at build time.
 - Platform stats are loaded from local context JSON.
-- Chat route lives in `api/chat.ts` and streams responses from TogetherAI.
+- Chat route lives in `api/chat.ts` and uses TogetherAI chat completions with model fallback.
 - Chat is stateless: no message history persistence.
 - Rate limit is enforced in-memory per IP.
 
