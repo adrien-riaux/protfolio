@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { checkRateLimit, sanitizeMessages } from '../src/lib/chat';
+import { buildSystemPrompt, checkRateLimit, sanitizeMessages } from '../src/lib/chat.js';
 
 describe('sanitizeMessages', () => {
   test('keeps only user and assistant roles', () => {
@@ -26,5 +26,15 @@ describe('checkRateLimit', () => {
     const store = new Map<string, { count: number; resetAt: number }>();
     expect(checkRateLimit('127.0.0.1', store, 1)).toBe(true);
     expect(checkRateLimit('127.0.0.1', store, 1)).toBe(false);
+  });
+});
+
+describe('buildSystemPrompt', () => {
+  test('uses only PROFILE context blocks', async () => {
+    const prompt = await buildSystemPrompt();
+
+    expect(prompt).toContain('=== PROFILE ===');
+    expect(prompt).not.toContain('=== ACHIEVEMENTS ===');
+    expect(prompt).not.toContain('=== CERTIFICATIONS ===');
   });
 });

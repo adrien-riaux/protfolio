@@ -1,5 +1,5 @@
-import type { ChatMessage } from './types';
-import { readAchievements, readCertifications, readProfileMarkdown } from './data';
+import type { ChatMessage } from './types.js';
+import { readProfileMarkdown } from './data.js';
 
 const MAX_HISTORY = 10;
 const MAX_MESSAGE_LENGTH = 2000;
@@ -27,26 +27,16 @@ export function sanitizeMessages(input: unknown): ChatMessage[] {
 }
 
 export async function buildSystemPrompt(): Promise<string> {
-  const [profile, achievements, certifications] = await Promise.all([
-    readProfileMarkdown(),
-    readAchievements(),
-    readCertifications()
-  ]);
+  const profile = await readProfileMarkdown();
 
   return `You are an AI assistant representing the portfolio owner.
-Answer questions only about the owner, their work, and their achievements.
+Answer questions only about the owner using the PROFILE content below.
 Speak in first person when appropriate and stay concise and honest.
 If information is unknown, clearly say you do not know.
-Do not fabricate details.
+Do not fabricate details or use outside knowledge.
 
 === PROFILE ===
-${profile}
-
-=== ACHIEVEMENTS ===
-${JSON.stringify(achievements, null, 2)}
-
-=== CERTIFICATIONS ===
-${JSON.stringify(certifications, null, 2)}`;
+${profile}`;
 }
 
 export interface RateLimitEntry {

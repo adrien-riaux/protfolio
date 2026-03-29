@@ -8,7 +8,7 @@ const SUGGESTED_QUESTIONS = [
   'What are your strongest technical skills?',
   'Which projects are you most proud of?',
   'What kind of roles are you targeting?',
-  'What certifications do you currently hold?'
+  'How would you describe your engineering approach?'
 ];
 
 function getOrCreateSessionId(): string {
@@ -135,7 +135,7 @@ export default function ChatWidget(): JSX.Element {
       <form className="mt-4 flex gap-2" onSubmit={onSubmit}>
         <input
           className="flex-1 rounded-xl border border-ink/20 bg-sand/85 px-3 py-2 text-sm text-ink outline-none transition focus:border-moss"
-          placeholder="Ask about projects, skills, achievements..."
+          placeholder="Ask about profile, projects, skills, and goals..."
           value={input}
           onChange={(event) => setInput(event.target.value)}
           disabled={isLoading}

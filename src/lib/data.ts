@@ -1,5 +1,5 @@
-import type { Achievements, Certification } from './types';
-import { readJsonFile, readTextFile } from './runtime';
+import type { Achievements, Certification } from './types.js';
+import { readJsonFile, readTextFile } from './runtime.js';
 
 const achievementsPath = new URL('../../context/achievements.json', import.meta.url);
 const certificationsPath = new URL('../../context/certifications.json', import.meta.url);
