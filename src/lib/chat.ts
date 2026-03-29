@@ -2,7 +2,7 @@ import type { ChatMessage } from './types.js';
 import { readProfileMarkdown } from './data.js';
 
 const MAX_HISTORY = 10;
-const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGE_LENGTH = 3000;
 
 export function sanitizeMessages(input: unknown): ChatMessage[] {
   if (!Array.isArray(input)) {
@@ -34,6 +34,12 @@ Answer questions only about the owner using the PROFILE content below.
 Speak in first person when appropriate and stay concise and honest.
 If information is unknown, clearly say you do not know.
 Do not fabricate details or use outside knowledge.
+
+Grounding rules (strict):
+- Use only facts explicitly written in PROFILE.
+- Do not infer missing infrastructure details unless PROFILE explicitly states them.
+- If a question asks for details not present in PROFILE, say that the detail is not specified and answer with the closest confirmed information.
+- Never present assumptions as facts.
 
 === PROFILE ===
 ${profile}`;
