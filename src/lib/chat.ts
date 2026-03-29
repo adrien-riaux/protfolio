@@ -1,8 +1,8 @@
 import type { ChatMessage } from './types.js';
-import { readAchievements, readCertifications, readProfileMarkdown } from './data.js';
+import { readProfileMarkdown } from './data.js';
 
 const MAX_HISTORY = 10;
-const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGE_LENGTH = 3000;
 
 export function sanitizeMessages(input: unknown): ChatMessage[] {
   if (!Array.isArray(input)) {
@@ -27,26 +27,22 @@ export function sanitizeMessages(input: unknown): ChatMessage[] {
 }
 
 export async function buildSystemPrompt(): Promise<string> {
-  const [profile, achievements, certifications] = await Promise.all([
-    readProfileMarkdown(),
-    readAchievements(),
-    readCertifications()
-  ]);
+  const profile = await readProfileMarkdown();
 
   return `You are an AI assistant representing the portfolio owner.
-Answer questions only about the owner, their work, and their achievements.
+Answer questions only about the owner using the PROFILE content below.
 Speak in first person when appropriate and stay concise and honest.
 If information is unknown, clearly say you do not know.
-Do not fabricate details.
+Do not fabricate details or use outside knowledge.
+
+Grounding rules (strict):
+- Use only facts explicitly written in PROFILE.
+- Do not infer missing infrastructure details unless PROFILE explicitly states them.
+- If a question asks for details not present in PROFILE, say that the detail is not specified and answer with the closest confirmed information.
+- Never present assumptions as facts.
 
 === PROFILE ===
-${profile}
-
-=== ACHIEVEMENTS ===
-${JSON.stringify(achievements, null, 2)}
-
-=== CERTIFICATIONS ===
-${JSON.stringify(certifications, null, 2)}`;
+${profile}`;
 }
 
 export interface RateLimitEntry {

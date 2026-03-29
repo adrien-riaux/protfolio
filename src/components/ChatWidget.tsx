@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { ChatMessage } from '../lib/types';
 
 const CHAT_SESSION_STORAGE_KEY = 'portfolio-chat-session-id';
 
 const SUGGESTED_QUESTIONS = [
-  'What are your strongest technical skills?',
-  'Which projects are you most proud of?',
-  'What kind of roles are you targeting?',
-  'What certifications do you currently hold?'
+  'What are you building as a Machine Learning Engineer at Dior?',
+  'What were your most impactful projects at Equancy?',
+  'Which MLOps and GenAI tools do you use in production?',
+  'Which open-source projects and models should I explore first?'
 ];
 
 function getOrCreateSessionId(): string {
@@ -126,7 +128,26 @@ export default function ChatWidget(): JSX.Element {
                 : 'max-w-[86%] border border-ink/15 bg-sand/70 text-ink'
             }`}
           >
-            {message.content || (isLoading && index === messages.length - 1 ? 'Thinking...' : '')}
+            {message.role === 'assistant' ? (
+              message.content ? (
+                <div className="chat-markdown [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:my-1 [&_a]:underline [&_a]:underline-offset-2 [&_code]:rounded [&_code]:bg-ink/10 [&_code]:px-1 [&_code]:py-0.5 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-ink/10 [&_pre]:p-3">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      a: (props) => <a {...props} target="_blank" rel="noreferrer" />
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
+              ) : isLoading && index === messages.length - 1 ? (
+                'Thinking...'
+              ) : (
+                ''
+              )
+            ) : (
+              message.content || (isLoading && index === messages.length - 1 ? 'Thinking...' : '')
+            )}
           </article>
         ))}
         <div ref={bottomRef} />
@@ -135,7 +156,7 @@ export default function ChatWidget(): JSX.Element {
       <form className="mt-4 flex gap-2" onSubmit={onSubmit}>
         <input
           className="flex-1 rounded-xl border border-ink/20 bg-sand/85 px-3 py-2 text-sm text-ink outline-none transition focus:border-moss"
-          placeholder="Ask about projects, skills, achievements..."
+          placeholder="Ask about profile, projects, skills, and goals..."
           value={input}
           onChange={(event) => setInput(event.target.value)}
           disabled={isLoading}
