@@ -5,10 +5,10 @@ import type { ChatMessage } from '../lib/types';
 const CHAT_SESSION_STORAGE_KEY = 'portfolio-chat-session-id';
 
 const SUGGESTED_QUESTIONS = [
-  'What are your strongest technical skills?',
-  'Which projects are you most proud of?',
-  'What kind of roles are you targeting?',
-  'How would you describe your engineering approach?'
+  'What are you building as a Machine Learning Engineer at Dior?',
+  'What were your most impactful projects at Equancy?',
+  'Which MLOps and GenAI tools do you use in production?',
+  'Which open-source projects and models should I explore first?'
 ];
 
 function getOrCreateSessionId(): string {
