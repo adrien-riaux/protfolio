@@ -60,6 +60,7 @@ PUBLIC_SITE_URL=https://yoursite.vercel.app
 - Public pages are generated statically at build time.
 - Platform stats are loaded from local context JSON.
 - Chat route lives in `api/chat.ts` and uses TogetherAI chat completions with model fallback.
+- Local `astro dev` exposes `/api/chat` through a dev middleware bridge to `api/chat.ts`.
 - Chat is stateless: no message history persistence.
 - Rate limit is enforced in-memory per IP.
 
