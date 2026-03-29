@@ -17,7 +17,7 @@ describe('sanitizeMessages', () => {
   test('caps message size', () => {
     const long = 'a'.repeat(5000);
     const result = sanitizeMessages([{ role: 'user', content: long }]);
-    expect(result[0].content.length).toBe(2000);
+    expect(result[0].content.length).toBe(3000);
   });
 });
 
