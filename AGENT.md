@@ -9,7 +9,7 @@ Build and maintain a portfolio website that is fast, clean, and easy to personal
 - Runtime and package manager: Bun
 - Framework: Astro
 - Styling: Tailwind CSS
-- API router: Hono
+- API endpoint: Vercel Function (api/chat.ts)
 - Chat provider: TogetherAI only
 - Primary model: meta-llama/Llama-3.3-70B-Instruct-Turbo-Free
 - Language: TypeScript for all logic and components
@@ -56,7 +56,7 @@ Required:
 - make preview
 
 ## Deployment Target
-- Vercel using nodejs20.x runtime for api/**/*.ts from vercel.json.
+- Vercel with Node.js version pinned via package.json engines (node: 20.x).
 - GitHub Actions uses two workflows:
    - .github/workflows/test.yml runs check and test on push to dev and main.
    - .github/workflows/deploy.yml deploys to Vercel only after CI Tests succeeds on main.
