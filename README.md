@@ -1,8 +1,6 @@
 # Portfolio Website
 
-A production-ready personal portfolio built with Astro and Bun, with a stateless AI assistant powered by TogetherAI.
-
-The site is static-first for speed and reliability: profile pages are pre-rendered, while the chat endpoint is serverless.
+A production-ready personal portfolio built with Astro and Bun, with a stateless AI assistant powered by TogetherAI. The site is static-first for speed and reliability: profile pages are pre-rendered, while the chat endpoint is serverless.
 
 ## Highlights
 
