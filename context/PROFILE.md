@@ -2,6 +2,7 @@
 
 **Role:** Machine Learning Engineer at Dior (LVMH)  
 **Links:** [LinkedIn](https://www.linkedin.com/in/adrien-riaux) | [GitHub](https://github.com/adrien-riaux) | [Kaggle](https://www.kaggle.com/adrienriaux) | [HuggingFace](https://huggingface.co/adrien-riaux)
+**Contact Information:** adrien.riaux@efrei.net
 
 ## 1. EXPERIENCE
 - **Machine Learning Engineer — Dior (LVMH)** (Mar 2026 - Present): Building production-grade MLOps and GenAI infrastructure (Scikit-Learn, FastAPI, LangGraph, Docker, ChromaDB, Dataiku, GCP: Cloud Run, Cloud SQL, GitHub CI/CD)
