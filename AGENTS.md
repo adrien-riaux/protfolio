@@ -1,4 +1,4 @@
-# AGENT.md - Portfolio Implementation Guide
+# AGENTS.md - Portfolio Implementation Guide
 
 This file is the single instruction source for this repository.
 
@@ -11,7 +11,8 @@ Build and maintain a portfolio website that is fast, clean, and easy to personal
 - Styling: Tailwind CSS
 - API endpoint: Vercel Function (api/chat.ts)
 - Chat provider: TogetherAI only
-- Primary model: meta-llama/Llama-3.3-70B-Instruct-Turbo-Free
+- Primary model: openai/gpt-oss-120b
+- Fallback model: servicenow-ai/apriel-1.6-15b-thinker
 - Language: TypeScript for all logic and components
 
 ## Product Rules
