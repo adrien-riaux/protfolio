@@ -5,7 +5,7 @@ import { getEnv } from '../src/lib/runtime.js';
 const PRIMARY_MODEL = 'Qwen/Qwen3.8-Flash';
 const FALLBACK_MODEL = 'Prism-ML/Ternary-Bonsai-27B';
 const MODEL_REQUEST_TIMEOUT_MS = 20_000;
-const TOGETHER_CHAT_COMPLETIONS_URL = 'https://api.together.xyz/v1/chat/completions';
+const TOGETHER_CHAT_COMPLETIONS_URL = 'https://api.together.ai/v1/chat/completions';
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 type RequestLike = {
