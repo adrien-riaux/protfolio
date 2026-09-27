@@ -4,7 +4,7 @@ import { getEnv } from '../src/lib/runtime.js';
 
 const PRIMARY_MODEL = 'Qwen/Qwen3.8-Flash';
 const FALLBACK_MODEL = 'Prism-ML/Ternary-Bonsai-27B';
-const MODEL_REQUEST_TIMEOUT_MS = 20_000;
+const MODEL_REQUEST_TIMEOUT_MS = 40_000;
 const TOGETHER_CHAT_COMPLETIONS_URL = 'https://api.together.ai/v1/chat/completions';
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
@@ -94,19 +94,84 @@ async function requestCompletion(
       body: JSON.stringify({
         model,
         temperature: 0.6,
-        max_tokens: 500,
+        max_tokens: 5000,
+        stream: true,
         messages
       }),
       signal: controller.signal
     });
 
-    const payload = (await response.json().catch(() => ({}))) as {
+    const contentType = response.headers.get('content-type') ?? '';
+    const rawText = await response.text().catch(() => '');
+
+    if (!response.ok) {
+      try {
+        const errorPayload = JSON.parse(rawText) as { error?: { message?: string } };
+        throw new Error(errorPayload.error?.message ?? `TogetherAI request failed with status ${response.status}`);
+      } catch (error) {
+        if (error instanceof Error && !error.message.startsWith('Unexpected token')) {
+          throw error;
+        }
+        const snippet = rawText.slice(0, 200).trim();
+        throw new Error(
+          snippet.length > 0
+            ? `TogetherAI request failed with status ${response.status}: ${snippet}`
+            : `TogetherAI request failed with status ${response.status}`
+        );
+      }
+    }
+
+    if (contentType.includes('text/event-stream')) {
+      let content = '';
+
+      for (const line of rawText.split('\n')) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data:')) {
+          continue;
+        }
+
+        const data = trimmed.slice(5).trim();
+        if (data.length === 0 || data === '[DONE]') {
+          continue;
+        }
+
+        let chunk: {
+          choices?: Array<{
+            delta?: { content?: unknown };
+            message?: { content?: unknown };
+          }>;
+          error?: { message?: string };
+        };
+        try {
+          chunk = JSON.parse(data);
+        } catch {
+          continue;
+        }
+
+        if (chunk.error) {
+          throw new Error(chunk.error.message ?? `TogetherAI request failed with status ${response.status}`);
+        }
+
+        const delta = chunk.choices?.[0]?.delta ?? chunk.choices?.[0]?.message ?? {};
+        if (typeof delta.content === 'string') {
+          content += delta.content;
+        }
+      }
+
+      if (content.trim().length === 0) {
+        throw new Error('TogetherAI returned an empty completion.');
+      }
+
+      return content;
+    }
+
+    const payload = (rawText.length > 0 ? JSON.parse(rawText) : {}) as {
       choices?: Array<{ message?: { content?: unknown } }>;
       error?: { message?: string };
     };
 
-    if (!response.ok) {
-      throw new Error(payload.error?.message ?? `TogetherAI request failed with status ${response.status}`);
+    if (payload.error) {
+      throw new Error(payload.error.message ?? `TogetherAI request failed with status ${response.status}`);
     }
 
     const content = payload.choices?.[0]?.message?.content;
