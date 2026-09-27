@@ -5,7 +5,12 @@
 **Contact Information:** adrien.riaux@efrei.net
 
 ## 1. EXPERIENCE
-- **Machine Learning Engineer — Dior (LVMH)** (Mar 2026 - Present): Building production-grade MLOps and GenAI infrastructure (Scikit-Learn, FastAPI, LangGraph, Docker, ChromaDB, Dataiku, GCP: Cloud Run, Cloud SQL, GitHub CI/CD)
+- **Machine Learning Engineer — Dior (LVMH)** (Mar 2026 - Present):
+  - MLOps & Infrastructure Optimization: Architected scalable MLOps pipelines and optimized Dataiku flows using GCP, cutting cloud costs while making end-to-end training, retraining, and inference production-ready.
+  - Production Maintenance & Governance: Maintain 20+ core production data assets and monitor Dataiku instances health automatically to ensure high system reliability and availability.
+  - Production AI Agents: Developed and maintain 5+ production-grade AI agents using RAG and Text-to-SQL paradigms.
+  - Cloud & Compute Engineering: Scaled inference and model training on GKE; leveraged GCP ecosystem (Cloud Run Services/Jobs, Cloud SQL, Agent Platform, Vector Search, Batch Inference, BigQuery, Compute Engine).
+  - Tech Leadership & Enterprise IT Security: Serve as technical lead on GCP/Dataiku architecture decisions, core maintainer of team documentation, and collaborate closely with LVMH IT Network & Security teams to ensure enterprise-grade compliance.
 - **Senior Data Scientist (previously Junior/Data Scientist) — Equancy** (Sep 2023 - Mar 2026):
   - Development of a client knowledge API, helping LVMH sales advisors prepare appointments (FastAPI, LangGraph, Docker, GCP: Cloud Run, Cloud SQL, GitHub CI/CD)
   - Supervision of internal development at Equancy as tech lead of a news agent bot (LangGraph, Perplexity, Docker, GCP: Cloud Run, GitLab CI/CD)

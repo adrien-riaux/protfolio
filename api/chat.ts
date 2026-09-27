@@ -2,8 +2,8 @@ import { buildSystemPrompt, checkRateLimit, sanitizeMessages } from '../src/lib/
 import type { ChatRequest } from '../src/lib/types.js';
 import { getEnv } from '../src/lib/runtime.js';
 
-const PRIMARY_MODEL = 'openai/gpt-oss-120b';
-const FALLBACK_MODEL = 'ServiceNow-AI/Apriel-1.6-15b-Thinker';
+const PRIMARY_MODEL = 'Qwen/Qwen3.8-Flash';
+const FALLBACK_MODEL = 'Prism-ML/Ternary-Bonsai-27B';
 const MODEL_REQUEST_TIMEOUT_MS = 20_000;
 const TOGETHER_CHAT_COMPLETIONS_URL = 'https://api.together.xyz/v1/chat/completions';
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();

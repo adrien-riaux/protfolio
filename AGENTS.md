@@ -11,8 +11,8 @@ Build and maintain a portfolio website that is fast, clean, and easy to personal
 - Styling: Tailwind CSS
 - API endpoint: Vercel Function (api/chat.ts)
 - Chat provider: TogetherAI only
-- Primary model: openai/gpt-oss-120b
-- Fallback model: servicenow-ai/apriel-1.6-15b-thinker
+- Primary model: Qwen/Qwen3.8-Flash
+- Fallback model: Prism-ML/Ternary-Bonsai-27B
 - Language: TypeScript for all logic and components
 
 ## Product Rules
