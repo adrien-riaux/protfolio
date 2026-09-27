@@ -18,7 +18,7 @@ A production-ready personal portfolio built with Astro and Bun, with a stateless
 - Client interactivity: React (Astro island)
 - API endpoint: Vercel Function
 - LLM provider: TogetherAI
-- Model strategy: openai/gpt-oss-120b (primary), servicenow-ai/apriel-1.6-15b-thinker (fallback)
+- Model strategy: Qwen/Qwen3.8-Flash (primary), Prism-ML/Ternary-Bonsai-27B (fallback)
 - Hosting target: Vercel with Node.js runtime for API routes
 
 ## Quick Start
