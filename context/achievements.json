@@ -9,10 +9,10 @@
         "description": "Distills ModernBERT into a compact Model2Vec embedding model, preserving strong retrieval quality with lower compute and latency."
       },
       {
-        "name": "comche",
-        "url": "https://github.com/adrien-riaux/comche",
-        "language": "Go",
-        "description": "Fast Go pre-commit checker that scans Python comments for tags like TODO and BUG to enforce commit hygiene."
+        "name": "framelaw",
+        "url": "https://github.com/adrien-riaux/framelaw",
+        "language": "Rust",
+        "description": "Provides native Rust schema contracts for Polars through a Python API."
       },
       {
         "name": "vidscribe",
